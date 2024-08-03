@@ -1,0 +1,69 @@
+class StudentGrades:
+    def __init__(self):
+        self.grades = {}
+
+    def add_grade(self, subject, grade):
+        """Add a grade for a specific subject."""
+        self.grades[subject] = grade
+
+    def calculate_average(self):
+        """Calculate the average grade."""
+        if not self.grades:
+            return 0
+        return sum(self.grades.values()) / len(self.grades)
+
+    def determine_letter_grade(self, average):
+        """Determine the letter grade based on the average."""
+        if average >= 90:
+            return 'A'
+        elif average >= 80:
+            return 'B'
+        elif average >= 70:
+            return 'C'
+        elif average >= 60:
+            return 'D'
+        else:
+            return 'F'
+
+    def calculate_gpa(self, average):
+        """Calculate GPA based on the average grade."""
+        return average / 25  # Simple conversion (assumption: max grade is 100, max GPA is 4.0)
+
+    def display_grades(self):
+        """Display the grades, average, letter grade, and GPA."""
+        if not self.grades:
+            print("No grades available.")
+            return
+
+        print("\nGrades:")
+        for subject, grade in self.grades.items():
+            print(f"{subject}: {grade}")
+
+        average = self.calculate_average()
+        letter_grade = self.determine_letter_grade(average)
+        gpa = self.calculate_gpa(average)
+
+        print(f"\nAverage Grade: {average:.2f}")
+        print(f"Letter Grade: {letter_grade}")
+        print(f"GPA: {gpa:.2f}")
+
+def main():
+    student = StudentGrades()
+    while True:
+        subject = input("\nEnter the subject (or 'done' to finish): ").strip()
+        if subject.lower() == 'done':
+            break
+
+        try:
+            grade = float(input(f"Enter the grade for {subject}: "))
+            if 0 <= grade <= 100:
+                student.add_grade(subject, grade)
+            else:
+                print("Invalid grade. Please enter a value between 0 and 100.")
+        except ValueError:
+            print("Invalid input. Please enter a numerical grade.")
+
+    student.display_grades()
+
+if __name__ == "__main__":
+    main()
